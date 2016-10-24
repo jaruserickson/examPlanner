@@ -12,15 +12,17 @@ import javax.swing.*;
 
 public class CourseDirectory implements ActionListener{
 	private JFrame exFrame;
-	private JLabel exLabel;
 	private static JTextArea textArea;
 	private JTextArea outArea;
+	private JComboBox schoolSelect;
+	private JTextArea name;
 	
-	public CourseDirectory(JFrame exFrame, JLabel exLabel, JTextArea textArea, JTextArea outArea){
+	public CourseDirectory(JFrame exFrame, JTextArea name, JTextArea textArea, JTextArea outArea, JComboBox schoolSelect){
 		this.exFrame = exFrame;
-		this.exLabel = exLabel;
 		this.textArea = textArea;
 		this.outArea = outArea;
+		this.schoolSelect = schoolSelect;
+		this.name = name;
 	}
 	
 	@Override
@@ -33,7 +35,6 @@ public class CourseDirectory implements ActionListener{
 		} catch (IOException e1) {
 			System.out.println("IOEXCEPTION");
 		}
-		exLabel.setText("Your Exams are:");
 		this.outArea.setText(contents.toString());
 	}
 	

@@ -13,29 +13,60 @@ public class ExamPlanner {
 	// UI/UX
 	// buildCourseDirectory
 	
+	private static String[] SCHOOLS = {"University of Toronto St. George", "University of Toronto Scarborough", "University of Toronto Mississauga", "Queen's", "Waterloo"};
+	
 	public static JFrame buildWindow() {
 		JFrame examFrame = new JFrame("UofT STG Exam Planner");
+		examFrame.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		
-		JLabel examLabel = new JLabel("Enter your LAST Name, then Courses");
-		JTextArea nameArea = new JTextArea("LAST_NAME",1,1);
-		//dropdown chooser of schools here
-		JTextArea textArea = new JTextArea("COURSE_CODES",6,10);
-		JTextArea outArea = new JTextArea("EXAMS",6,30);
+		JLabel examLabel = new JLabel("Enter Course CODE:");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		examFrame.add(examLabel, c);
+		JLabel nameLabel = new JLabel("Enter your LAST name:");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		examFrame.add(nameLabel, c);
+		JLabel schoolLabel = new JLabel("Select your School:");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		examFrame.add(schoolLabel, c);
+		JTextArea nameArea = new JTextArea(1,10);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		examFrame.add(nameArea, c);
+		JComboBox schoolSelect = new JComboBox(SCHOOLS);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		examFrame.add(schoolSelect, c);
+		JTextArea textArea = new JTextArea(6,10);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 3;
+		examFrame.add(textArea, c);
+		JTextArea outArea = new JTextArea(6,30);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 3;
+		examFrame.add(outArea, c);
 		
 		JButton submitButton = new JButton("Confirm Courses");
 		submitButton.setVerticalTextPosition(AbstractButton.CENTER);
 		submitButton.setHorizontalTextPosition(AbstractButton.LEADING);
 		
-		ActionListener buttonListener = new CourseDirectory(examFrame, examLabel, textArea, outArea);
+		ActionListener buttonListener = new CourseDirectory(examFrame, nameArea, textArea, outArea, schoolSelect);
 		submitButton.addActionListener(buttonListener);
-		
-		Container c = examFrame.getContentPane();
-		c.add(examLabel,  BorderLayout.PAGE_START);
-		c.add(textArea, BorderLayout.WEST);
-		c.add(nameArea, BorderLayout.NORTH);
-		c.add(submitButton,BorderLayout.CENTER);
-		c.add(outArea, BorderLayout.EAST);
-		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 3;
+		examFrame.add(submitButton, c);
+
 		examFrame.pack();
 		return examFrame;
 		
