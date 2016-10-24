@@ -43,7 +43,9 @@ public class CourseDirectory implements ActionListener{
 		BufferedReader courses = new BufferedReader(f);
 		String l = courses.readLine();
 		while(l != null){
-			contents.append(l + "\n");
+			if (s.toUpperCase().contains(l.substring(0, 6))){
+				contents.append(l + "\n");
+			}
 			l = courses.readLine();
 		}
 		courses.close();
