@@ -60,28 +60,36 @@ public class CourseDirectory implements ActionListener{
 	private static void buildExamContents(FileReader f, StringBuffer contents) throws IOException{
 		//lets have different files with the different schools/campus' at a file/mySQL database
 		String entry = textArea.getText();
+		char initial = 'a';
 		try{
-		String initial = name.getText().substring(0,1);
+		initial = name.getText().toCharArray()[0];
 		}catch(StringIndexOutOfBoundsException e4){
 			name.setText("MISSING NAME");
 		}
 		BufferedReader courses = new BufferedReader(f);
 		String l = courses.readLine();
+		
 		while(l != null){
-			String[] sp = l.split(", "); //set up for further verification
-			if (entry.toUpperCase().contains(sp[0].substring(0, 6))){
-				contents.append(l + "\n");
+			String[] sp = l.split(", ");
+			
+			if (sp[1].contains(" - ")){ //if there is a name range
+				String[] range = sp[1].split(" - ");
+				char r1 = range[0].toCharArray()[0]; //need to add support for dual character name range
+				char r2 = range[1].toCharArray()[0];
+				if (entry.toUpperCase().contains(sp[0].substring(0, 6)) && initial >= r1 && initial <= r2){
+					contents.append(l + "\n");
+				}
+			}else if (!sp[1].contains(" - ")){
+				if (entry.toUpperCase().contains(sp[0].substring(0, 6))){
+					contents.append(l + "\n");
+				}
 			}
+			
 			l = courses.readLine();
 		}
+		
 		courses.close();
 		
-	}
-	
-	private boolean inLetterRange(String name){
-		String s = name.substring(0,1);
-		
-		return true;
 	}
 	
 }

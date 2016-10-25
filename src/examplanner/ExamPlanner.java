@@ -9,9 +9,8 @@ public class ExamPlanner {
 	
 	//TODO:
 	// MySQL database for all the courses from schools n shiz
-	// FIX nameArea
-	// UI/UX
-	// buildCourseDirectory
+	// Swing gui
+	// two character name range support
 	
 	protected static String[] SCHOOLS = {"University of Toronto St. George", "University of Toronto Scarborough", "University of Toronto Mississauga", "Queen's", "Waterloo"};
 	
