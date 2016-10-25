@@ -7,9 +7,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import org.python.core.PyObject;
-import org.python.core.PyString;
-import org.python.util.PythonInterpreter;
 
 import javax.swing.*;
 
@@ -63,10 +60,8 @@ public class CourseDirectory implements ActionListener{
 	private static void buildExamContents(FileReader f, StringBuffer contents) throws IOException{
 		//lets have different files with the different schools/campus' at a file/mySQL database
 		String entry = textArea.getText();
-		char initial = 'a';
 		String initials = "aaa";
 		try{
-		initial = name.getText().toCharArray()[0];
 		initials = name.getText().toUpperCase();
 		}catch(StringIndexOutOfBoundsException e4){
 			name.setText("MISSING NAME");
@@ -76,24 +71,10 @@ public class CourseDirectory implements ActionListener{
 		
 		while(l != null){
 			String[] sp = l.split(", ");
-			PythonInterpreter interp = new PythonInterpreter(); //using jython
-			interp.execfile(DirectoryFinder.filePath + "/namerange.py");
 			
-			if (sp[1].contains(" - ")){ //if there is a name range, python used here for convinience
+			if (sp[1].contains(" - ")){ //if there is a name range
 				String[] range = sp[1].split(" - ");
-				//char r1 = range[0].toCharArray()[0]; java option
-				//char r2 = range[1].toCharArray()[0];
-				interp.set("a", range[0]);
-				interp.set("b", initials);
-				interp.set("c", range[1]);
-				PyObject bool = interp.eval("myPythonClass().namerange(a,b,c)");
-				boolean flag = false;
-				if (bool.toString() == "True"){
-					flag = true;
-				}else{
-					flag = false;
-				}
-				if (entry.toUpperCase().contains(sp[0].substring(0, 6)) && flag){
+				if (entry.toUpperCase().contains(sp[0].substring(0, 6)) && namerange(range[0],initials,range[1])){
 					contents.append(l + "\n");
 				}
 			}else if (!sp[1].contains(" - ")){
@@ -107,6 +88,43 @@ public class CourseDirectory implements ActionListener{
 		
 		courses.close();
 		
+	}
+	
+	/**
+	 * Method to check if string b is in the range of strings a and c
+	 * @param a first range string
+	 * @param b name to check
+	 * @param c second range string
+	 * @return true if b is in range of a and c
+	 */
+	private static boolean namerange(String a, String b, String c){
+		if (b.length() == 1){ //to catch when name length is 1
+			b += "AAA";
+		}
+		
+		for (int i = 0;i<a.length();i++){ //iterative bulk of code
+			if (a.toCharArray()[i] < b.toCharArray()[i]){
+				break;
+			}else if(a.toCharArray()[i] == b.toCharArray()[i]){
+				if (i == a.length()-1){//inclusive
+					return true;
+				}
+			}else{
+				return false;
+			}
+		}
+		for (int i = 0;i<c.length();i++){
+			if(c.toCharArray()[i] > b.toCharArray()[i]){
+				return true;
+			}else if(c.toCharArray()[i] == b.toCharArray()[i]){
+				if (i == c.length()-1){//inclusive
+					return true;
+				}
+			}else{
+				return false;
+			}
+		}
+		return false;
 	}
 	
 }
