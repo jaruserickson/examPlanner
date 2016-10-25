@@ -13,14 +13,14 @@ public class ExamPlanner {
 	// UI/UX
 	// buildCourseDirectory
 	
-	private static String[] SCHOOLS = {"University of Toronto St. George", "University of Toronto Scarborough", "University of Toronto Mississauga", "Queen's", "Waterloo"};
+	protected static String[] SCHOOLS = {"University of Toronto St. George", "University of Toronto Scarborough", "University of Toronto Mississauga", "Queen's", "Waterloo"};
 	
 	public static JFrame buildWindow() {
 		JFrame examFrame = new JFrame("UofT STG Exam Planner");
 		examFrame.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		JLabel examLabel = new JLabel("Enter Course CODE:");
+		JLabel examLabel = new JLabel("Enter Course CODE and LEC section (if required):");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
@@ -35,6 +35,11 @@ public class ExamPlanner {
 		c.gridx = 0;
 		c.gridy = 0;
 		examFrame.add(schoolLabel, c);
+		JLabel exLabel = new JLabel("Your exams are:");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 2;
+		examFrame.add(exLabel, c);
 		JTextArea nameArea = new JTextArea(1,10);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
@@ -55,6 +60,21 @@ public class ExamPlanner {
 		c.gridx = 2;
 		c.gridy = 3;
 		examFrame.add(outArea, c);
+		JLabel courseLabel = new JLabel("Locate course_exams folder:");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 0;
+		examFrame.add(courseLabel, c);
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		JButton openButton = new JButton("Choose Directory");
+		ActionListener openListener = new DirectoryFinder(examFrame, courseLabel, fileChooser);
+		openButton.addActionListener(openListener);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 1;
+		examFrame.add(openButton, c);
 		
 		JButton submitButton = new JButton("Confirm Courses");
 		submitButton.setVerticalTextPosition(AbstractButton.CENTER);
