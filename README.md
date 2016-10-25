@@ -1,10 +1,4 @@
 # examPlanner
 Exam Scheduler for University Students
-- University of Toronto St. George
-
-To be added:
-- University of Toronto Scarborough
-- University of Toronto Mississauga
-- University of Waterloo
-- Queen's University
-and more!
+JAVA 1.8 / JYTHON 2.7.0
+- Current Support for the University of Toronto St. George Campus.

@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import org.python.core.PyObject;
+import org.python.core.PyString;
+import org.python.util.PythonInterpreter;
 
 import javax.swing.*;
 
@@ -61,8 +64,10 @@ public class CourseDirectory implements ActionListener{
 		//lets have different files with the different schools/campus' at a file/mySQL database
 		String entry = textArea.getText();
 		char initial = 'a';
+		String initials = "aaa";
 		try{
 		initial = name.getText().toCharArray()[0];
+		initials = name.getText().toUpperCase();
 		}catch(StringIndexOutOfBoundsException e4){
 			name.setText("MISSING NAME");
 		}
@@ -71,12 +76,24 @@ public class CourseDirectory implements ActionListener{
 		
 		while(l != null){
 			String[] sp = l.split(", ");
+			PythonInterpreter interp = new PythonInterpreter(); //using jython
+			interp.execfile(DirectoryFinder.filePath + "/namerange.py");
 			
-			if (sp[1].contains(" - ")){ //if there is a name range
+			if (sp[1].contains(" - ")){ //if there is a name range, python used here for convinience
 				String[] range = sp[1].split(" - ");
-				char r1 = range[0].toCharArray()[0]; //need to add support for dual character name range
-				char r2 = range[1].toCharArray()[0];
-				if (entry.toUpperCase().contains(sp[0].substring(0, 6)) && initial >= r1 && initial <= r2){
+				//char r1 = range[0].toCharArray()[0]; java option
+				//char r2 = range[1].toCharArray()[0];
+				interp.set("a", range[0]);
+				interp.set("b", initials);
+				interp.set("c", range[1]);
+				PyObject bool = interp.eval("myPythonClass().namerange(a,b,c)");
+				boolean flag = false;
+				if (bool.toString() == "True"){
+					flag = true;
+				}else{
+					flag = false;
+				}
+				if (entry.toUpperCase().contains(sp[0].substring(0, 6)) && flag){
 					contents.append(l + "\n");
 				}
 			}else if (!sp[1].contains(" - ")){
