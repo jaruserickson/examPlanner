@@ -1,5 +1,5 @@
 # examPlanner
-JAVA 1.8 / JYTHON 2.7.0
+JAVA 1.8
 
 Exam Scheduler for University Students
 
