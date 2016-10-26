@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 public class ExamPlanner {
 	
@@ -22,7 +24,6 @@ public class ExamPlanner {
 		
 		try {//setting swing look and feel
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
-				System.out.println(info.getName());
 				if ("Nimbus".equals(info.getName())){
 					UIManager.setLookAndFeel(info.getClassName());
 					break;
@@ -35,6 +36,13 @@ public class ExamPlanner {
 		JFrame examFrame = new JFrame("UofT STG Exam Planner");
 		examFrame.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
+		
+		try{
+			Image image = new ImageIcon("/img/logo.png/").getImage();
+			examFrame.setIconImage(image);
+		}catch(Exception e2){
+			System.out.println("ERROR: Icon not found");
+		}
 		
 		JLabel examLabel = new JLabel("Enter Course CODE and LEC section (if required):");
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -87,12 +95,6 @@ public class ExamPlanner {
 		c.gridx = 1;
 		c.gridy = 3;
 		examFrame.add(submitButton, c);
-		
-		try{
-			examFrame.setIconImage(ImageIO.read(new File("")));
-		}catch (IOException e1){
-			System.out.println("image icon not found");
-		}
 		
 		examFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		examFrame.pack();
