@@ -30,20 +30,20 @@ public class CourseDirectory implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		StringBuffer contents = new StringBuffer();
-		
-			String filePath = DirectoryFinder.filePath;
+			
+			String filePath = "course_exams/utsg.txt";
 			String school = schoolSelect.getSelectedItem().toString();
 			
 			if (school.equals("University of Toronto St. George")){
-				filePath += "/utsg.txt";
+				filePath = "course_exams/utsg.txt";
 			}else if (school.equals("University of Toronto Scarborough")){
-				filePath += "/utsc.txt";
+				filePath = "course_exams/utsc.txt";
 			}else if (school.equals("University of Toronto Mississauga")){
-				filePath += "/utm.txt";
+				filePath = "course_exams/utm.txt";
 			}else if (school.equals("Queen's University")){
-				filePath += "/queens.txt";
+				filePath = "course_exams/queens.txt";
 			}else if (school.equals("University of Waterloo")){
-				filePath += "/uw.txt";
+				filePath = "coruse_exams/uw.txt";
 			}
 
 			try {
@@ -60,7 +60,7 @@ public class CourseDirectory implements ActionListener{
 	private static void buildExamContents(FileReader f, StringBuffer contents) throws IOException{
 		//lets have different files with the different schools/campus' at a file/mySQL database
 		String entry = textArea.getText();
-		String initials = "aaa";
+		String initials = "AAA";
 		try{
 		initials = name.getText().toUpperCase();
 		}catch(StringIndexOutOfBoundsException e4){
