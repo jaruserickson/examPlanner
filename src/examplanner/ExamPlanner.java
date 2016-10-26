@@ -1,9 +1,13 @@
 package examplanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class ExamPlanner {
 	
@@ -12,9 +16,22 @@ public class ExamPlanner {
 	// Swing gui
 	// two character name range support
 	
-	protected static String[] SCHOOLS = {"University of Toronto St. George", "University of Toronto Scarborough", "University of Toronto Mississauga", "Queen's", "Waterloo"};
+	protected static String[] SCHOOLS = {"University of Toronto St. George", "University of Toronto Scarborough", "University of Toronto Mississauga", "Queen's University", "University of Waterloo"};
 	
 	public static JFrame buildWindow() {
+		
+		try {//setting swing look and feel
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
+				System.out.println(info.getName());
+				if ("Nimbus".equals(info.getName())){
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		}catch (Exception e){
+			System.out.println("Nimbus not found, using default UI");
+		}
+		
 		JFrame examFrame = new JFrame("UofT STG Exam Planner");
 		examFrame.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -59,21 +76,6 @@ public class ExamPlanner {
 		c.gridx = 2;
 		c.gridy = 3;
 		examFrame.add(outArea, c);
-		JLabel courseLabel = new JLabel("Locate course_exams folder:");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 2;
-		c.gridy = 0;
-		examFrame.add(courseLabel, c);
-		
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		JButton openButton = new JButton("Choose Directory");
-		ActionListener openListener = new DirectoryFinder(examFrame, courseLabel, fileChooser);
-		openButton.addActionListener(openListener);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 2;
-		c.gridy = 1;
-		examFrame.add(openButton, c);
 		
 		JButton submitButton = new JButton("Confirm Courses");
 		submitButton.setVerticalTextPosition(AbstractButton.CENTER);
@@ -85,7 +87,14 @@ public class ExamPlanner {
 		c.gridx = 1;
 		c.gridy = 3;
 		examFrame.add(submitButton, c);
-
+		
+		try{
+			examFrame.setIconImage(ImageIO.read(new File("")));
+		}catch (IOException e1){
+			System.out.println("image icon not found");
+		}
+		
+		examFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		examFrame.pack();
 		return examFrame;
 		
