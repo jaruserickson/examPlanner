@@ -5,8 +5,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class ExamPlanner {
 	
@@ -35,7 +33,7 @@ public class ExamPlanner {
 		GridBagConstraints c = new GridBagConstraints();
 		
 		try{
-			Image image = new ImageIcon("/img/logo.png/").getImage();
+			Image image = new ImageIcon("img/logo.png").getImage();
 			examFrame.setIconImage(image);
 		}catch(Exception e2){
 			System.out.println("ERROR: Icon not found");
@@ -66,6 +64,7 @@ public class ExamPlanner {
 		c.gridx = 1;
 		c.gridy = 1;
 		examFrame.add(nameArea, c);
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox schoolSelect = new JComboBox(SCHOOLS);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;

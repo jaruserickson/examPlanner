@@ -3,13 +3,12 @@ package examplanner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.*;
-
+@SuppressWarnings({"static-access", "unused", "rawtypes"})
 public class CourseDirectory implements ActionListener{
 	private JFrame exFrame;
 	private static JTextArea textArea;
@@ -17,8 +16,7 @@ public class CourseDirectory implements ActionListener{
 	private JComboBox schoolSelect;
 	private static JTextArea name;
 	
-	private String [] line;
-	
+
 	public CourseDirectory(JFrame exFrame, JTextArea name, JTextArea textArea, JTextArea outArea, JComboBox schoolSelect){
 		this.exFrame = exFrame;
 		this.textArea = textArea;
