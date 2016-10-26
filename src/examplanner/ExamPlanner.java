@@ -1,15 +1,12 @@
 package examplanner;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 public class ExamPlanner {
 	
@@ -84,6 +81,18 @@ public class ExamPlanner {
 		c.gridx = 2;
 		c.gridy = 3;
 		examFrame.add(outArea, c);
+
+		//greasy logo here
+		ImageIcon image = new ImageIcon("img/image.png");
+		Image img = image.getImage();
+		Image newimg = img.getScaledInstance(200, 33, java.awt.Image.SCALE_SMOOTH);
+		ImageIcon image2 = new ImageIcon(newimg);
+		
+		JLabel imageLabel = new JLabel(image2);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 1;
+		examFrame.add(imageLabel,c);
 		
 		JButton submitButton = new JButton("Confirm Courses");
 		submitButton.setVerticalTextPosition(AbstractButton.CENTER);
